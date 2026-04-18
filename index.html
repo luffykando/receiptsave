@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReceiptSave • Auto-track expenses from WhatsApp & Email</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            color: #0f172a;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #0f172a 0%, #1e40af 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #475569;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid #2563eb;
+            color: #2563eb;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-outline:hover {
+            background: #eff6ff;
+        }
+
+        .btn-large {
+            padding: 16px 40px;
+            font-size: 16px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 80px 0 60px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #e0e7ff;
+            color: #1e40af;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero h1 span {
+            color: #2563eb;
+            border-bottom: 3px solid #06b6d4;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #475569;
+            max-width: 600px;
+            margin: 0 auto 32px;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .demo-text {
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        /* Features */
+        .features {
+            padding: 60px 0;
+            background: white;
+            border-radius: 48px;
+            margin: 20px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .section-sub {
+            text-align: center;
+            color: #475569;
+            max-width: 600px;
+            margin: 0 auto 48px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 32px 24px;
+            background: #f8fafc;
+            border-radius: 24px;
+            transition: all 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            background: #f1f5f9;
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            color: #475569;
+            font-size: 14px;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 60px 0;
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            padding: 24px;
+        }
+
+        .step-number {
+            width: 48px;
+            height: 48px;
+            background: #2563eb;
+            color: white;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 20px;
+            margin: 0 auto 16px;
+        }
+
+        /* Pricing */
+        .pricing {
+            padding: 60px 0;
+            background: white;
+            border-radius: 48px;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 32px;
+            margin-top: 40px;
+        }
+
+        .pricing-card {
+            background: #f8fafc;
+            border-radius: 24px;
+            padding: 32px 24px;
+            text-align: center;
+            transition: all 0.2s;
+            border: 1px solid #e2e8f0;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.1);
+        }
+
+        .pricing-card.featured {
+            border: 2px solid #2563eb;
+            background: #eff6ff;
+        }
+
+        .price {
+            font-size: 36px;
+            font-weight: 700;
+            margin: 16px 0;
+        }
+
+        .price small {
+            font-size: 14px;
+            font-weight: 400;
+            color: #64748b;
+        }
+
+        .pricing-card ul {
+            list-style: none;
+            margin: 24px 0;
+        }
+
+        .pricing-card li {
+            padding: 8px 0;
+            color: #475569;
+            font-size: 14px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 48px 0 32px;
+            border-top: 1px solid #e2e8f0;
+            margin-top: 40px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #475569;
+            font-size: 14px;
+        }
+
+        .copyright {
+            font-size: 12px;
+            color: #94a3b8;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .nav-links {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">Receipt<span>Save</span>.in</div>
+        <div class="nav-links">
+            <a href="#">Features</a>
+            <a href="#">Pricing</a>
+            <a href="#">How it works</a>
+            <a href="privacy.html">Privacy</a>
+            <a href="terms.html">Terms</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="badge">🇮🇳 Made for Indian Freelancers</div>
+        <h1>Forward receipts on <span>WhatsApp</span><br>Get <span>tax-ready</span> reports</h1>
+        <p>Stop typing expenses. Just forward bills from Amazon, Uber, Flipkart to our WhatsApp bot. We extract GST, categorize, and send monthly tax reports.</p>
+        <div class="cta-group">
+            <a href="#" class="btn-primary btn-large">Start Free →</a>
+            <a href="#" class="btn-outline btn-large">Watch Demo</a>
+        </div>
+        <div class="demo-text">Free for 10 receipts/month • No credit card • Setup in 2 minutes</div>
+    </div>
+
+    <!-- Features -->
+    <div class="features">
+        <h2 class="section-title">Save hours every month</h2>
+        <div class="section-sub">Indian freelancers waste 2-3 hours on expense tracking. We fix that.</div>
+        <div class="grid-3">
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>WhatsApp Forwarding</h3>
+                <p>Just forward any receipt image or PDF to our bot. No app to install, no login to remember.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🧾</div>
+                <h3>Auto GST Extraction</h3>
+                <p>AI reads GST number, amount, date, and merchant automatically. 95% accuracy on Indian receipts.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Monthly Tax Report</h3>
+                <p>Get PDF & Excel reports every month with category breakdown and ITC eligible expenses.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔄</div>
+                <h3>ITC Tracking</h3>
+                <p>Auto-calculates Input Tax Credit you can claim. Never miss a deduction again.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📧</div>
+                <h3>Email Backup</h3>
+                <p>Forward receipts to receipts@receiptsave.in as backup. Works both ways.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔐</div>
+                <h3>CA Friendly</h3>
+                <p>One-click share reports with your Chartered Accountant. No messy spreadsheets.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- How It Works -->
+    <div class="how-it-works">
+        <h2 class="section-title">How it works</h2>
+        <div class="section-sub">Three simple steps. Zero headache.</div>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Save our number</h3>
+                <p>Add ReceiptSave on WhatsApp. Takes 10 seconds.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Forward receipts</h3>
+                <p>Forward any bill, invoice, or payment confirmation.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Get tax report</h3>
+                <p>We send you a ready-to-file report every month.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pricing -->
+    <div class="pricing">
+        <h2 class="section-title">Simple, usage-based pricing</h2>
+        <div class="section-sub">Pay only for what you use. No hidden fees.</div>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>Free</h3>
+                <div class="price">₹0<span>/month</span></div>
+                <ul>
+                    <li>✓ 10 receipts/month</li>
+                    <li>✓ WhatsApp forwarding</li>
+                    <li>✓ Basic categories</li>
+                    <li>✗ Monthly tax report</li>
+                    <li>✗ ITC tracking</li>
+                </ul>
+                <a href="#" class="btn-outline">Start Free</a>
+            </div>
+            <div class="pricing-card featured">
+                <h3>Pro</h3>
+                <div class="price">₹299<span>/month</span></div>
+                <ul>
+                    <li>✓ 100 receipts/month</li>
+                    <li>✓ WhatsApp + Email</li>
+                    <li>✓ GST categories</li>
+                    <li>✓ Monthly tax report</li>
+                    <li>✓ ITC tracking</li>
+                </ul>
+                <a href="#" class="btn-primary">Try Pro →</a>
+            </div>
+            <div class="pricing-card">
+                <h3>Business</h3>
+                <div class="price">₹799<span>/month</span></div>
+                <ul>
+                    <li>✓ 500 receipts/month</li>
+                    <li>✓ Priority support</li>
+                    <li>✓ CA sharing</li>
+                    <li>✓ Export to Excel</li>
+                    <li>✓ Custom categories</li>
+                </ul>
+                <a href="#" class="btn-outline">Contact Sales</a>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 32px; font-size: 13px; color: #64748b;">
+            Overages: ₹5 per extra receipt. Auto-notified before charging.
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Contact</a>
+            <a href="#">Refund Policy</a>
+        </div>
+        <div class="copyright">
+            © 2026 ReceiptSave.in • Made for Indian freelancers • GST ready
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
